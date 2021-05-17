@@ -1,0 +1,207 @@
+local platypus = require "platypus.platypus"
+loookingAt=0
+local LEFT = hash("left")
+local RIGHT = hash("right")
+local JUMP = hash("jump")
+local DASH=hash("dash")
+local ATTACK=hash("attack")
+local TOGGLE_DEBUG = hash("toggle_debug")
+local TOGGLE_PROFILE = hash("toggle_profile")
+
+local ANIM_RUN = hash("run")
+local ANIM_JUMP = hash("jump")
+local ANIM_IDLE = hash("idle")
+
+
+local function play_animation(self, animation)
+	if self.current_animation ~= animation then
+		msg.post("#sprite", "play_animation", { id = animation })
+		self.current_animation = animation
+	end
+end
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.input_state = {}
+	self.platypus = platypus.create({
+		collisions = {
+			separation = platypus.SEPARATION_RAYS,
+			groups = {
+				[hash("ground")] = platypus.DIR_ALL,
+				--[hash("onewayplatform")] = platypus.DIR_ALL,
+				[hash("onewayplatform")] = platypus.DIR_DOWN,
+				[hash("onewaydoor")] = platypus.DIR_LEFT,
+			},
+			left = 40, right = 60, top = 60, bottom = 73, offset = vmath.vector3(0, 0, 0)
+		},
+		gravity = -399,
+		max_velocity = 1100,
+		allow_double_jump = true,
+		allow_wall_jump = true,
+		allow_wall_slide = true,
+		wall_slide_gravity = -50,
+		wall_jump_power_ratio_x=0.7,
+		wall_jump_power_ratio_y=1.5,
+		const_wall_jump=false,
+		debug = true,
+	})
+	self.current_animation = nil
+	loookingAt=0
+	velI=455
+	vel=velI
+	dashV=2*velI
+	msg.post("@render:", "clear_color", { color = vmath.vector4(0.008, 0.090, 0.129, 1.0) })
+
+
+	walljumping=false
+	--bloque del dasheo
+	
+	self.canDash=true
+	self.dashing=false
+	oriDash=3
+	self.dashTimer=oriDash
+	function restoreDash() 
+		self.dashTimer=oriDash;
+		self.canDash=true 
+		--sound.play("#dashEnd")
+	end
+
+	--disparar
+	self.canShoot=true
+	self.hasShot=false
+end
+
+function update(self, dt)
+	--print(self.canShoot)
+	local ground_contact = self.platypus.has_ground_contact()
+	local walljumpd=self.platypus.is_wall_jumping()
+
+	--real dashing area, esta es la buena. Aunque... Es mas que nada como rush de adrenalina o algo. Hm...
+	
+	if self.dashing and not walljumpd and not walljumping then
+		vel=dashV
+		self.dashTimer=self.dashTimer-dt
+		if self.dashTimer<=0 then
+			sound.play("#dashEnd")
+			vel=velI
+			self.dashing=false
+			dashTimer=timer.delay(5, false, restoreDash) --llamar a restoreDash sin los parentesis al final, sino lo ejecuta de inmediato.
+		end
+	end
+	
+	if walljumpd and (not self.dashing) and vel<630 then
+		--WJ()
+		walljumping=true
+		--vel=vel+200*dt
+		timer.delay(1.6, false, function() vel=velI; walljumping=false end)
+	end
+	
+	--disparar
+	if self.canShoot and self.hasShot then
+		local id=factory.create("#bullet")
+		self.canShoot=false
+		if loookingAt==1 then
+			msg.post(msg.url(nil,id,"shot"), "lookingLeft")
+		elseif loookingAt==2 then
+			msg.post(msg.url(nil,id,"shot"), "lookingRight")
+		end
+		factory.create("#bullet")
+		--timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
+	end
+	
+	--control velocidad
+	if self.input_state[LEFT] then
+		loookingAt=1
+		self.platypus.left(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
+		--tal vez cambiar el orden porque esta cosa chequea rápido.
+		play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+		sprite.set_hflip("#sprite", true) 
+	elseif self.input_state[RIGHT] then
+		loookingAt=2
+		self.platypus.right(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
+		play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+		sprite.set_hflip("#sprite", false)
+	else
+		self.platypus.abort_wall_slide()
+		play_animation(self, ground_contact and ANIM_IDLE or ANIM_JUMP)
+	end
+	self.platypus.update(dt)
+end
+
+
+local function handle_action(self, action_id, action)
+	if not action_id then return end
+	if action.pressed then
+		self.input_state[action_id] = true
+	elseif action.released then
+		self.input_state[action_id] = nil
+	end
+
+	if action_id == hash("toggle_profile") then
+		if action.released then
+			msg.post("@system:", "toggle_profile")
+		end
+		return
+	end
+
+	if action_id == JUMP then
+		if action.pressed then
+			self.platypus.jump(350)
+		elseif action.released then
+			self.platypus.abort_jump()
+		end
+	elseif action_id == TOGGLE_DEBUG and action.released then
+		self.platypus.toggle_debug()
+		msg.post("@system:", "toggle_physics_debug")
+	elseif action_id==DASH then
+		if action.pressed then
+			if not self.dashing and self.canDash and not walljumping then
+				sound.play("#dashOn")
+				self.dashing=true
+				self.canDash=false
+				vel=2*vel
+			end
+		end
+	elseif action_id==ATTACK then
+		self.hasShot=true
+	end
+end
+--probando el dasheo
+
+
+function on_message(self, message_id, message, sender)
+	self.platypus.on_message(message_id, message, sender)
+	if message_id == platypus.GROUND_CONTACT then
+		print("Ground contact")
+	elseif message_id == platypus.WALL_CONTACT then
+		print("Wall contact")
+	elseif message_id == platypus.FALLING then
+		print("Falling")
+	elseif message_id == platypus.WALL_JUMP then
+		sprite.set_hflip("#sprite", self.platypus.velocity.x < 0)
+	elseif message_id == hash("onscreen") then
+		if message.id == hash("left") then
+			handle_action(self, LEFT, message)
+		elseif message.id == hash("right") then
+			handle_action(self, RIGHT, message)
+		elseif message.id == hash("jump") then
+			handle_action(self, JUMP, message)
+		end
+	elseif message_id==hash("bulletDed") then
+		self.canShoot=true 
+		self.hasShot=false
+		
+		
+	end
+end
+
+
+function on_input(self, action_id, action)
+	handle_action(self, action_id, action)
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end
