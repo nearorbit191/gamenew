@@ -23,7 +23,7 @@ end
 
 function update(self, dt)
 	local number
-	pprint(self.createdDumdums)
+	--pprint(self.createdDumdums)
 	if not self.ended then
 		number=self.n
 		if number==0 then 

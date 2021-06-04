@@ -125,24 +125,30 @@ function update(self, dt)
 			msg.post(msg.url(nil,id,"shot"), "lookingRight")
 		end
 		factory.create("#bullet")
+		--self.shootAnim=false
 		--timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
 	end
 	
---control velocidad
+	--control velocidad
+	print(self.shootAnim)
 	if self.isAlive then
 		if self.input_state[LEFT] then
 			self.lookingAt=1
 			self.platypus.left(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
 			--tal vez cambiar el orden porque esta cosa chequea rápido.
-			if self.canShoot then
+			if not self.shootAnim then
 				play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+			else
+				play_animation(self, ANIM_FIRE)
 			end
 			sprite.set_hflip("#sprite", true) 
 		elseif self.input_state[RIGHT] then
 			self.lookingAt=2
 			self.platypus.right(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
-			if self.canShoot then
+			if not self.shootAnim then
 				play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+			else
+				play_animation(self, ANIM_FIRE)
 			end
 			sprite.set_hflip("#sprite", false)
 		else
@@ -192,8 +198,12 @@ local function handle_action(self, action_id, action)
 		end
 		
 	elseif action_id==ATTACK then
-		self.hasShot=true
-		self.shootAnim=true
+		if action.pressed then
+			self.hasShot=true
+			self.shootAnim=true
+		elseif action.released then
+			timer.delay(0.1, false, function() self.shootAnim=false end)
+		end
 	end
 end
 
@@ -220,6 +230,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id==hash("bulletDed") then
 		self.canShoot=true 
 		self.hasShot=false
+		--self.shootAnim=false
 	elseif message_id==hash("trigger_response") then
 			if message.enter then
 			--	print ("see u")
