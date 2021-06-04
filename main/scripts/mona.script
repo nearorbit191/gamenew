@@ -34,7 +34,7 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 40, right = 60, top = 60, bottom = 73, offset = vmath.vector3(0, 0, 0)
+			left = 30, right = 30, top = 60, bottom = 73, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity = -399,
 		max_velocity = 1100,
@@ -53,7 +53,7 @@ function init(self)
 	self.current_animation = nil
 	self.lookingAt=0
 	self.shootAnim=false
-	velI=455
+	velI=480
 	vel=velI
 	dashV=2*velI
 	msg.post("@render:", "clear_color", { color = vmath.vector4(0.008, 0.090, 0.129, 1.0) })
@@ -66,35 +66,35 @@ function init(self)
 	self.dashing=false
 	oriDash=3
 	self.dashTimer=oriDash
+	
 	function restoreDash() 
 		self.dashTimer=oriDash;
 		self.canDash=true 
-		--sound.play("#dashEnd")
+		--sound.play("#dashReady")
 	end
 
 	--disparar
 	self.canShoot=true
 	self.hasShot=false
+
+	vibeChecked=false
 end
 
 
 function update(self, dt)
 	--print(self.canShoot)
-	print(self.shootAnim)
-	print(self.hp)
 	
 	local ground_contact = self.platypus.has_ground_contact()
 	local walljumpd=self.platypus.is_wall_jumping()
 
 	--vibe check
-	if self.hp<=0 then
+	if self.hp<=0 and not vibeChecked then
+		vibeChecked=true
 		msg.post(".", "toast")
-
 	end
 
 	
 	--real dashing area, esta es la buena. Aunque... Es mas que nada como rush de adrenalina o algo. Hm...
-	
 	if self.dashing and not walljumpd and not walljumping and self.isAlive then
 		vel=dashV
 		self.dashTimer=self.dashTimer-dt
@@ -228,6 +228,7 @@ function on_message(self, message_id, message, sender)
 			end
 	elseif message_id==hash("bulletHit") then
 		self.hp=self.hp-1/2
+		
 	elseif message_id==hash("toast") then
 		self.isAlive=false
 		play_animation(self, ANIM_IDLE)
@@ -235,14 +236,17 @@ function on_message(self, message_id, message, sender)
 		msg.post("camera","unfollow")
 		go.set_position(vmath.vector3(0,-5,1))
 		msg.post("/testlevel#mapcontrol", "monaToast")
+		msg.post("/dumdummaker#dumdummaker", "monaToast")
 		
 	elseif message_id==hash("rise") then
 		self.hp=2; self.isAlive=true
 		pprint(message[1])
 		go.set_position(vmath.vector3(message[1], message[2], 1))
 		--msg.post("camera", "follow", {target=("/mona")})
-		timer.delay(1.3, false, function() msg.post("camera", "follow", {target=("/mona")}) end)
+		timer.delay(0.3, false, function() msg.post("camera", "follow", {target=("/mona")}) end)
 		timer.delay(1.5, false, function() msg.post("#sprite", "enable") end)
+		vibeChecked=false
+		
 	end
 	
 end

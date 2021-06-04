@@ -4,7 +4,7 @@
 
 local platypus= require "platypus.platypus"
 function init(self)
-	screamed=false
+	self.screamed=false
 	self.canShoot=true
 	self.hasShot=false
 	self.alerted=false
@@ -43,7 +43,7 @@ end
 
 function final(self)
 	print("Luck is with you, Lo Wang")
-	sound.play("#die")
+	--sound.play("#die")
 	-- Add finalization code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
@@ -56,15 +56,16 @@ function update(self, dt)
 	--print(self.xpos)
 	local isGrounded=self.platypus.has_ground_contact()
 
-	if forceLook==1 then
+	if self.forceLook==1 then
 		self.lookingAt=1
 		sprite.set_hflip("#sprite", false) 
-	elseif forceLook==2 then
+	elseif self.forceLook==2 then
 		self.lookingAt=2
 		sprite.set_hflip("#sprite", true) 
 	end
-
-	if self.hp<=0 and not screamed then
+	print(self.hp)
+	
+	if self.hp<=0 then
 		--screamed=true
 		msg.post(".", "scream")
 		timer.delay(0.4,false, function() go.delete() end)
@@ -134,10 +135,10 @@ function on_message(self, message_id, message, sender)
 				print("hi mona")
 				--ver a que lado mira
 				if monapos<self.xpos then
-					forceLook=1
+					self.forceLook=1
 					print("2 the right")
 				elseif monapos>self.xpos then
-					forceLook=2
+					self.forceLook=2
 				end
 				
 				self.hasShot=true
@@ -146,7 +147,7 @@ function on_message(self, message_id, message, sender)
 			--attack()
 		else 
 			self.alerted=false
-			forceLook=0
+			self.forceLook=0
 			print("dumdum:cant see u")
 		end
 	elseif message_id==hash("bulletHit") then
@@ -154,9 +155,9 @@ function on_message(self, message_id, message, sender)
 		self.hp=self.hp-1/2
 		
 	elseif message_id==hash("scream") then
-		if not screamed then
-			--sound.play("#die")
-			screamed=true
+		if not self.screamed then
+			sound.play("#die")
+			self.screamed=true
 		end
 		
 	end

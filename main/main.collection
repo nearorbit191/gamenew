@@ -106,8 +106,8 @@ instances {
   id: "dumdum"
   prototype: "/main/dumdum.go"
   position {
-    x: 146.0
-    y: 127.0
+    x: 807.0
+    y: 98.0
     z: 1.0
   }
   rotation {
@@ -135,6 +135,66 @@ instances {
     y: 0.0
     z: 0.0
     w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdummaker"
+  prototype: "/main/dumdummaker.go"
+  position {
+    x: -541.0
+    y: 524.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 315.0
+    y: 559.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder1"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 157.0
+    y: 129.0
+    z: 0.0
+  }
+  rotation {
+    x: -0.0811644
+    y: 0.0
+    z: 0.0
+    w: 0.9967007
   }
   scale3 {
     x: 1.0

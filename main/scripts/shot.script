@@ -78,6 +78,8 @@ function on_message(self, message_id, message, sender)
 		go.delete()
 		msg.post("mona#mona", "bulletDed")
 		msg.post(message.other_id, "bulletHit")
+		
+		
 		print("I collided with", message.other_id)
 	
 	end
