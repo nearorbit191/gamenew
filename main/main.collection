@@ -102,4 +102,44 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "dumdum"
+  prototype: "/main/dumdum.go"
+  position {
+    x: 146.0
+    y: 127.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "startpoint"
+  prototype: "/main/startpoint.go"
+  position {
+    x: -376.0
+    y: 231.0
+    z: 5.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0

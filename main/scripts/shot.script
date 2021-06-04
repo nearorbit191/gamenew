@@ -11,13 +11,14 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_ALL,
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
+				--[hash("enemy")] = dumdum.nme,
 			},
 			left = 10, right = 10, top = 10, bottom = 10, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity=0,
 		debug=true,
-
-	})
+	}
+)
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
@@ -33,10 +34,12 @@ function update(self, dt)
 	local wall_contact = self.platypus.has_wall_contact()
 	--print(lookingAt)
 	if lookingAt==1 then
-		self.platypus.left(800)
+		sprite.set_hflip("#sprite", true)
+		self.platypus.left(900)
 		--print("disparar a la izquierda")
 	elseif lookingAt==2 then
-		self.platypus.right(800)
+		sprite.set_hflip("#sprite", false)
+		self.platypus.right(900)
 		--print("disparar a la izquierda")
 	else
 		print("baile")
@@ -54,16 +57,29 @@ end
 
 function on_message(self, message_id, message, sender)
 	self.platypus.on_message(message_id, message, sender)
+	--el funcionamiento de la bala es bastante meh, básicamente la mona envía un mensaje al script para generar una bala mediante
+	--mensajes, y luego el script devuelve a la mona que la bala se destruyó y que puede disparar otra vez.
+	--La bala puede morir por chocar o, de no chocar, por tiempo.
 	if message_id==hash("lookingLeft") then
+		sprite.set_hflip("#sprite", true)
 		lookingAt=1
 		active=true
 	elseif message_id==hash("lookingRight") then
+		sprite.set_hflip("#sprite", false)
 		lookingAt=2
 		active=true
 	elseif message_id == platypus.WALL_CONTACT then
 		print("Wall contact")
+		timer.delay(0.08, false, function() msg.post("mona#mona", "bulletDed"); go.delete() end)
+		--go.delete()
+		--timer.delay(0.2, false, function() msg.post("mona#mona", "bulletDed") end)
+	elseif message_id == hash("collision_response") then --esto podría ser simplemente un OR para esa dos situaciones pero meh
+		-- take action
 		go.delete()
 		msg.post("mona#mona", "bulletDed")
+		msg.post(message.other_id, "bulletHit")
+		print("I collided with", message.other_id)
+	
 	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/

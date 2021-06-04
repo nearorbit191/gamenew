@@ -1,5 +1,5 @@
 local platypus = require "platypus.platypus"
-loookingAt=0
+
 local LEFT = hash("left")
 local RIGHT = hash("right")
 local JUMP = hash("jump")
@@ -11,6 +11,7 @@ local TOGGLE_PROFILE = hash("toggle_profile")
 local ANIM_RUN = hash("run")
 local ANIM_JUMP = hash("jump")
 local ANIM_IDLE = hash("idle")
+local ANIM_FIRE = hash("shoot")
 
 
 local function play_animation(self, animation)
@@ -41,13 +42,17 @@ function init(self)
 		allow_wall_jump = true,
 		allow_wall_slide = true,
 		wall_slide_gravity = -50,
-		wall_jump_power_ratio_x=0.7,
+		wall_jump_power_ratio_x=0.3,
 		wall_jump_power_ratio_y=1.5,
 		const_wall_jump=false,
 		debug = true,
-	})
+	}
+)
+	self.isAlive=true
+	self.hp=2
 	self.current_animation = nil
-	loookingAt=0
+	self.lookingAt=0
+	self.shootAnim=false
 	velI=455
 	vel=velI
 	dashV=2*velI
@@ -72,59 +77,80 @@ function init(self)
 	self.hasShot=false
 end
 
+
 function update(self, dt)
 	--print(self.canShoot)
+	print(self.shootAnim)
+	print(self.hp)
+	
 	local ground_contact = self.platypus.has_ground_contact()
 	local walljumpd=self.platypus.is_wall_jumping()
 
+	--vibe check
+	if self.hp<=0 then
+		msg.post(".", "toast")
+
+	end
+
+	
 	--real dashing area, esta es la buena. Aunque... Es mas que nada como rush de adrenalina o algo. Hm...
 	
-	if self.dashing and not walljumpd and not walljumping then
+	if self.dashing and not walljumpd and not walljumping and self.isAlive then
 		vel=dashV
 		self.dashTimer=self.dashTimer-dt
 		if self.dashTimer<=0 then
 			sound.play("#dashEnd")
 			vel=velI
 			self.dashing=false
-			dashTimer=timer.delay(5, false, restoreDash) --llamar a restoreDash sin los parentesis al final, sino lo ejecuta de inmediato.
+			dashTimer=timer.delay(5, false, restoreDash) --llamar a restoreDash sin los parentesis al final, sino lo ejecuta de inmediato. Dummy.
 		end
 	end
 	
-	if walljumpd and (not self.dashing) and vel<630 then
+	if walljumpd and (not self.dashing) and vel<630 and self.isAlive then
 		--WJ()
 		walljumping=true
 		--vel=vel+200*dt
-		timer.delay(1.6, false, function() vel=velI; walljumping=false end)
+		timer.delay(1.3, false, function() vel=velI; walljumping=false end)
 	end
 	
 	--disparar
-	if self.canShoot and self.hasShot then
-		local id=factory.create("#bullet")
+	if self.canShoot and self.hasShot and self.isAlive then
+
 		self.canShoot=false
-		if loookingAt==1 then
+		local id=factory.create("#bullet")
+		play_animation(self, ANIM_FIRE)
+		if self.lookingAt==1 then
 			msg.post(msg.url(nil,id,"shot"), "lookingLeft")
-		elseif loookingAt==2 then
+		elseif self.lookingAt==2 then
 			msg.post(msg.url(nil,id,"shot"), "lookingRight")
 		end
 		factory.create("#bullet")
 		--timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
 	end
 	
-	--control velocidad
-	if self.input_state[LEFT] then
-		loookingAt=1
-		self.platypus.left(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
-		--tal vez cambiar el orden porque esta cosa chequea rápido.
-		play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
-		sprite.set_hflip("#sprite", true) 
-	elseif self.input_state[RIGHT] then
-		loookingAt=2
-		self.platypus.right(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
-		play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
-		sprite.set_hflip("#sprite", false)
-	else
-		self.platypus.abort_wall_slide()
-		play_animation(self, ground_contact and ANIM_IDLE or ANIM_JUMP)
+--control velocidad
+	if self.isAlive then
+		if self.input_state[LEFT] then
+			self.lookingAt=1
+			self.platypus.left(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
+			--tal vez cambiar el orden porque esta cosa chequea rápido.
+			if self.canShoot then
+				play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+			end
+			sprite.set_hflip("#sprite", true) 
+		elseif self.input_state[RIGHT] then
+			self.lookingAt=2
+			self.platypus.right(ground_contact and vel or ((walljumping and not self.dashing) and 1.3*vel) or ((not self.dashing) and 4*vel/5) or 3*vel/4)
+			if self.canShoot then
+				play_animation(self, ground_contact and ANIM_RUN or ANIM_JUMP)
+			end
+			sprite.set_hflip("#sprite", false)
+		else
+			self.platypus.abort_wall_slide()
+			if self.canShoot then
+				play_animation(self, ground_contact and ANIM_IDLE or ANIM_JUMP)
+			end
+		end
 	end
 	self.platypus.update(dt)
 end
@@ -145,7 +171,7 @@ local function handle_action(self, action_id, action)
 		return
 	end
 
-	if action_id == JUMP then
+	if action_id == JUMP and self.isAlive then
 		if action.pressed then
 			self.platypus.jump(350)
 		elseif action.released then
@@ -154,8 +180,9 @@ local function handle_action(self, action_id, action)
 	elseif action_id == TOGGLE_DEBUG and action.released then
 		self.platypus.toggle_debug()
 		msg.post("@system:", "toggle_physics_debug")
+		
 	elseif action_id==DASH then
-		if action.pressed then
+		if action.pressed and self.isAlive then
 			if not self.dashing and self.canDash and not walljumping then
 				sound.play("#dashOn")
 				self.dashing=true
@@ -163,11 +190,13 @@ local function handle_action(self, action_id, action)
 				vel=2*vel
 			end
 		end
+		
 	elseif action_id==ATTACK then
 		self.hasShot=true
+		self.shootAnim=true
 	end
 end
---probando el dasheo
+
 
 
 function on_message(self, message_id, message, sender)
@@ -191,9 +220,31 @@ function on_message(self, message_id, message, sender)
 	elseif message_id==hash("bulletDed") then
 		self.canShoot=true 
 		self.hasShot=false
+	elseif message_id==hash("trigger_response") then
+			if message.enter then
+			--	print ("see u")
+			else 
+			--	print("cant see u")
+			end
+	elseif message_id==hash("bulletHit") then
+		self.hp=self.hp-1/2
+	elseif message_id==hash("toast") then
+		self.isAlive=false
+		play_animation(self, ANIM_IDLE)
+		msg.post("#sprite", "disable")
+		msg.post("camera","unfollow")
+		go.set_position(vmath.vector3(0,-5,1))
+		msg.post("/testlevel#mapcontrol", "monaToast")
 		
-		
+	elseif message_id==hash("rise") then
+		self.hp=2; self.isAlive=true
+		pprint(message[1])
+		go.set_position(vmath.vector3(message[1], message[2], 1))
+		--msg.post("camera", "follow", {target=("/mona")})
+		timer.delay(1.3, false, function() msg.post("camera", "follow", {target=("/mona")}) end)
+		timer.delay(1.5, false, function() msg.post("#sprite", "enable") end)
 	end
+	
 end
 
 

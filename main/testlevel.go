@@ -14,8 +14,8 @@ components {
   }
 }
 components {
-  id: "bgmu"
-  component: "/main/scripts/bgmu.script"
+  id: "mapcontrol"
+  component: "/main/scripts/mapcontrol.script"
   position {
     x: 0.0
     y: 0.0
@@ -57,10 +57,10 @@ embedded_components {
 embedded_components {
   id: "bgm"
   type: "sound"
-  data: "sound: \"/main/sounds/Botanik.ogg\"\n"
+  data: "sound: \"/main/sounds/D_EVILslow.ogg\"\n"
   "looping: 1\n"
   "group: \"master\"\n"
-  "gain: 1.0\n"
+  "gain: 0.05\n"
   "pan: 0.0\n"
   "speed: 1.0\n"
   "loopcount: 0\n"
