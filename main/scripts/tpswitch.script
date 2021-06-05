@@ -17,6 +17,10 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id==hash("activate") then
+		print("open sesame")
+		go.set_position(vmath.vector3(0,-200,1), "mona")
+	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/
 	-- Remove this function if not needed

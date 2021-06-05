@@ -153,6 +153,7 @@ embedded_components {
   "group: \"mona\"\n"
   "mask: \"nmebullet\"\n"
   "mask: \"onewayplatform\"\n"
+  "mask: \"interactive\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

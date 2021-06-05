@@ -5,6 +5,7 @@ local RIGHT = hash("right")
 local JUMP = hash("jump")
 local DASH=hash("dash")
 local ATTACK=hash("attack")
+local INTER=hash("interact")
 local TOGGLE_DEBUG = hash("toggle_debug")
 local TOGGLE_PROFILE = hash("toggle_profile")
 
@@ -34,7 +35,7 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 30, right = 30, top = 60, bottom = 73, offset = vmath.vector3(0, 0, 0)
+			left = 30, right = 30, top = 60, bottom = 76, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity = -399,
 		max_velocity = 1100,
@@ -48,6 +49,8 @@ function init(self)
 		debug = true,
 	}
 )
+	self.canInteract=false
+	self.switchInter=false
 	self.isAlive=true
 	self.hp=2
 	self.current_animation = nil
@@ -203,6 +206,14 @@ local function handle_action(self, action_id, action)
 		elseif action.released then
 			timer.delay(0.1, false, function() self.shootAnim=false end)
 		end
+	elseif action_id==INTER then
+		
+		if self.canInteract and not self.switchInter then
+			print("I touch the button")
+			self.switchInter=true
+			timer.delay(1, false, function() self.switchInter=false end)
+			msg.post("tpswitch#tpswitch", "activate")
+		end
 	end
 end
 
@@ -232,9 +243,13 @@ function on_message(self, message_id, message, sender)
 		--self.shootAnim=false
 	elseif message_id==hash("trigger_response") then
 			if message.enter then
-			--	print ("see u")
+				if message.other_id==hash("/tpswitch") then
+					self.canInteract=true
+				
+				end
 			else 
-			--	print("cant see u")
+				--	print("cant see u")
+				self.canInteract=false
 			end
 	elseif message_id==hash("bulletHit") then
 		self.hp=self.hp-1/2

@@ -5,7 +5,7 @@ instances {
   position {
     x: -23.0
     y: -1.0
-    z: 0.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -25,7 +25,7 @@ instances {
   position {
     x: -362.0
     y: 357.0
-    z: 1.0
+    z: 2.0
   }
   rotation {
     x: 0.0
@@ -136,8 +136,8 @@ instances {
   id: "startpoint"
   prototype: "/main/startpoint.go"
   position {
-    x: -376.0
-    y: 379.0
+    x: -2.0
+    y: -206.0
     z: 5.0
   }
   rotation {
@@ -177,7 +177,7 @@ instances {
   prototype: "/main/dumdumplaceholder.go"
   position {
     x: 315.0
-    y: 559.0
+    y: 691.0
     z: 0.0
   }
   rotation {
@@ -229,6 +229,26 @@ instances {
   scale3 {
     x: 0.5
     y: 0.5
+    z: 1.0
+  }
+}
+instances {
+  id: "tpswitch"
+  prototype: "/main/tpswitch.go"
+  position {
+    x: 1954.0
+    y: 336.0
+    z: 1.5
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
     z: 1.0
   }
 }
