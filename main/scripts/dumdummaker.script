@@ -49,7 +49,7 @@ function update(self, dt)
 
 	if self.purgeCreated==true then
 		self.purgeCreated=false
-		timer.delay(4, false, 
+		timer.delay(3, false, 
 		function()
 			go.delete_all(self.createdDumdums)
 			self.purgeCreated=false
