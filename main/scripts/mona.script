@@ -130,7 +130,6 @@ function update(self, dt)
 	end
 	
 	--control velocidad
-	print(self.shootAnim)
 	if self.isAlive then
 		if self.input_state[LEFT] then
 			self.lookingAt=1
@@ -250,12 +249,12 @@ function on_message(self, message_id, message, sender)
 		msg.post("/dumdummaker#dumdummaker", "monaToast")
 		
 	elseif message_id==hash("rise") then
-		self.hp=2; self.isAlive=true
-		pprint(message[1])
+		self.hp=2
 		go.set_position(vmath.vector3(message[1], message[2], 1))
 		--msg.post("camera", "follow", {target=("/mona")})
 		timer.delay(0.3, false, function() msg.post("camera", "follow", {target=("/mona")}) end)
-		timer.delay(1.5, false, function() msg.post("#sprite", "enable") end)
+		timer.delay(1.5, false, function() msg.post("#sprite", "enable"); self.isAlive=true end)
+		--self.isAlive=true
 		vibeChecked=false
 		
 	end

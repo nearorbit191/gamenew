@@ -21,7 +21,7 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 20, right = 20, top = 20, bottom = 27, offset = vmath.vector3(0, 0, 0)
+			left = 6, right = 6, top = 20, bottom = 27, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity = -20,
 		max_velocity = 1100,
@@ -63,7 +63,7 @@ function update(self, dt)
 		self.lookingAt=2
 		sprite.set_hflip("#sprite", true) 
 	end
-	print(self.hp)
+	--print(self.hp)
 	
 	if self.hp<=0 then
 		--screamed=true
