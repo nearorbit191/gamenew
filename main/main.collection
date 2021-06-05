@@ -24,7 +24,7 @@ instances {
   prototype: "/main/mona.go"
   position {
     x: -362.0
-    y: 176.0
+    y: 357.0
     z: 1.0
   }
   rotation {
@@ -56,14 +56,24 @@ instances {
   component_properties {
     id: "script"
     properties {
+      id: "near_z"
+      value: "-2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
       id: "far_z"
       value: "3.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "zoom"
-      value: "1.0"
+      value: "1.2"
       type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "projection"
+      value: "FIXED_AUTO"
+      type: PROPERTY_TYPE_HASH
     }
     properties {
       id: "offset_gui"
@@ -82,7 +92,7 @@ instances {
     }
     properties {
       id: "follow_lerp"
-      value: "1.0"
+      value: "0.2"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
@@ -127,7 +137,7 @@ instances {
   prototype: "/main/startpoint.go"
   position {
     x: -376.0
-    y: 231.0
+    y: 379.0
     z: 5.0
   }
   rotation {
@@ -199,6 +209,26 @@ instances {
   scale3 {
     x: 1.0
     y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "crudearrows"
+  prototype: "/main/crudearrows.go"
+  position {
+    x: -382.0
+    y: 547.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.5
+    y: 0.5
     z: 1.0
   }
 }

@@ -338,7 +338,7 @@ convex_hulls {
 convex_hulls {
   index: 264
   count: 4
-  collision_group: ""
+  collision_group: "ground"
 }
 convex_hulls {
   index: 268
@@ -718,7 +718,7 @@ convex_hulls {
 convex_hulls {
   index: 568
   count: 4
-  collision_group: ""
+  collision_group: "onewayplatform"
 }
 convex_hulls {
   index: 572
@@ -2283,7 +2283,7 @@ convex_hulls {
 convex_hulls {
   index: 1820
   count: 4
-  collision_group: ""
+  collision_group: "ground"
 }
 convex_hulls {
   index: 1824
@@ -4031,6 +4031,7 @@ convex_hulls {
   collision_group: ""
 }
 collision_groups: "ground"
+collision_groups: "onewayplatform"
 collision_groups: "tet"
 animations {
   id: "anim"
