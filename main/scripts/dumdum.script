@@ -1,9 +1,10 @@
 --Nombre: DumDum
 --Resumen: Enemigo que está atrapado en su plataforma, se mueve de un lado a otro, y solo ataca cuando tiene a alguien en frente
-
-
+local ANIM_RUN = hash("run")
+local ANIM_ATT = hash("attack")
 local platypus= require "platypus.platypus"
 function init(self)
+	self.xpos=vmath.vector3(0,0,0)
 	self.screamed=false
 	self.canShoot=true
 	self.hasShot=false
@@ -21,7 +22,7 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 6, right = 6, top = 20, bottom = 27, offset = vmath.vector3(0, 0, 0)
+			left = 6, right = 6, top = 50, bottom = 60, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity = -20,
 		max_velocity = 1100,
@@ -41,6 +42,14 @@ function init(self)
 	end
 end
 
+local function play_animation(self, animation)
+	if self.current_animation ~= animation then
+		msg.post("#sprite", "play_animation", { id = animation })
+		self.current_animation = animation
+	end
+end
+
+
 function final(self)
 	print("Luck is with you, Lo Wang")
 	--sound.play("#die")
@@ -50,10 +59,9 @@ function final(self)
 end
 
 function update(self, dt)
-
 	
-	self.xpos=go.get_position().x
-	--print(self.xpos)
+	self.xpos=go.get_world_position(self.id).x
+	print(self.xpos)
 	local isGrounded=self.platypus.has_ground_contact()
 
 	if self.forceLook==1 then
@@ -94,8 +102,11 @@ function update(self, dt)
 	--disparar
 
 	if self.alerted and (self.canShoot and self.hasShot) and not self.turning then
+		play_animation(self, ANIM_ATT)
 		local id=factory.create("#nmebulletmaker")
 		self.canShoot=false
+		print(self.lookingAt)
+		print("xpos"..self.xpos)
 		if self.lookingAt==1 then
 			msg.post(msg.url(nil,id,"nmebullet"), "lookingLeft")
 		elseif self.lookingAt==2 then
@@ -109,10 +120,12 @@ function update(self, dt)
 	if self.lookingAt==1 and not self.alerted then
 		self.platypus.left(50)
 		sprite.set_hflip("#sprite", false) 
+		play_animation(self, ANIM_RUN)
 		
 	elseif self.lookingAt==2 and not self.alerted then
 		self.platypus.right(50)
 		sprite.set_hflip("#sprite", true) 
+		play_animation(self,ANIM_RUN)
 	end
 
 	self.platypus.update(dt)
@@ -136,9 +149,10 @@ function on_message(self, message_id, message, sender)
 				--ver a que lado mira
 				if monapos<self.xpos then
 					self.forceLook=1
-					print("2 the right")
+					print("2 the left")
 				elseif monapos>self.xpos then
 					self.forceLook=2
+					print("2 da right")
 				end
 				
 				self.hasShot=true

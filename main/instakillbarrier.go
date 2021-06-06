@@ -1,6 +1,6 @@
 components {
-  id: "nmebullet"
-  component: "/main/scripts/nmebullet.script"
+  id: "ikbarrier"
+  component: "/main/scripts/ikbarrier.script"
   position {
     x: 0.0
     y: 0.0
@@ -14,34 +14,14 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/main/anim/bullet.atlas\"\n"
-  "default_animation: \"nme\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 1.0
-    z: 0.0
-    w: 6.123234E-17
-  }
-}
-embedded_components {
-  id: "nmeshot"
+  id: "collisionobject"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
-  "type: COLLISION_OBJECT_TYPE_DYNAMIC\n"
-  "mass: 1.0\n"
+  "type: COLLISION_OBJECT_TYPE_TRIGGER\n"
+  "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"nmebullet\"\n"
+  "group: \"fall\"\n"
   "mask: \"mona\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
@@ -60,13 +40,33 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 6.6485\n"
-  "  data: 4.6\n"
-  "  data: 4.6\n"
+  "  data: 76.7835\n"
+  "  data: 10.0\n"
+  "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "tile_set: \"/main/anim/bullet.atlas\"\n"
+  "default_animation: \"default\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
     x: 0.0

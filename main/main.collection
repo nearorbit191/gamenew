@@ -1,30 +1,10 @@
 name: "main"
 instances {
-  id: "testlevel"
-  prototype: "/main/testlevel.go"
-  position {
-    x: -23.0
-    y: -1.0
-    z: 0.9
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
   id: "mona"
   prototype: "/main/mona.go"
   position {
-    x: 5545.0
-    y: 736.0
+    x: 63.0
+    y: -2403.0
     z: 1.0
   }
   rotation {
@@ -112,7 +92,7 @@ instances {
     }
     properties {
       id: "deadzone_bottom"
-      value: "100.0"
+      value: "0.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
@@ -128,31 +108,11 @@ instances {
   }
 }
 instances {
-  id: "dumdum"
-  prototype: "/main/dumdum.go"
-  position {
-    x: 807.0
-    y: -145.0
-    z: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
   id: "startpoint"
   prototype: "/main/startpoint.go"
   position {
-    x: 3237.0
-    y: 422.0
+    x: 106.0
+    y: -2366.0
     z: 5.0
   }
   rotation {
@@ -171,9 +131,9 @@ instances {
   id: "dumdummaker"
   prototype: "/main/dumdummaker.go"
   position {
-    x: -541.0
-    y: 524.0
-    z: 0.0
+    x: 0.0
+    y: 502.0
+    z: -5.0
   }
   rotation {
     x: 0.0
@@ -191,8 +151,8 @@ instances {
   id: "dumdumplaceholder"
   prototype: "/main/dumdumplaceholder.go"
   position {
-    x: 315.0
-    y: 293.0
+    x: 823.0
+    y: -2120.0
     z: 0.0
   }
   rotation {
@@ -200,26 +160,6 @@ instances {
     y: 0.0
     z: 0.0
     w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "dumdumplaceholder1"
-  prototype: "/main/dumdumplaceholder.go"
-  position {
-    x: 157.0
-    y: 295.0
-    z: 0.0
-  }
-  rotation {
-    x: -0.0811644
-    y: 0.0
-    z: 0.0
-    w: 0.9967007
   }
   scale3 {
     x: 1.0
@@ -268,11 +208,31 @@ instances {
   }
 }
 instances {
+  id: "bg"
+  prototype: "/main/bg.go"
+  position {
+    x: 7144.0
+    y: -1937.0
+    z: 0.01
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.8
+    y: 1.8
+    z: 1.0
+  }
+}
+instances {
   id: "e1m1"
   prototype: "/main/e1m1.go"
   position {
-    x: 3459.0
-    y: 222.0
+    x: 288.0
+    y: -2547.0
     z: 0.0
   }
   rotation {
@@ -291,8 +251,8 @@ instances {
   id: "e1m2"
   prototype: "/main/e1m2.go"
   position {
-    x: 7482.0
-    y: 425.0
+    x: 4110.0
+    y: -2440.0
     z: 0.0
   }
   rotation {
@@ -308,11 +268,11 @@ instances {
   }
 }
 instances {
-  id: "bg"
-  prototype: "/main/bg.go"
+  id: "testlevel"
+  prototype: "/main/testlevel.go"
   position {
-    x: 10415.0
-    y: 1066.0
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -322,9 +282,109 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.8
-    y: 1.8
+    x: 1.0
+    y: 1.0
     z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder1"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 2438.0
+    y: -2140.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder2"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 3919.0
+    y: -2155.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder3"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 5170.0
+    y: -2010.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder4"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 8510.0
+    y: -1329.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "instakillbarrier"
+  prototype: "/main/instakillbarrier.go"
+  position {
+    x: 7407.0
+    y: -7781.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 500.0
+    y: 500.0
+    z: 500.0
   }
 }
 scale_along_z: 0

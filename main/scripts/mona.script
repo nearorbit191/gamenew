@@ -31,7 +31,7 @@ function init(self)
 			separation = platypus.SEPARATION_RAYS,
 			groups = {
 				[hash("ground")] = platypus.DIR_ALL,
-				--[hash("onewayplatform")] = platypus.DIR_ALL,
+				[hash("onewayplatform")] = platypus.DIR_ALL,
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
@@ -262,6 +262,8 @@ function on_message(self, message_id, message, sender)
 		go.set_position(vmath.vector3(0,-5,1))
 		msg.post("/testlevel#mapcontrol", "monaToast")
 		msg.post("/dumdummaker#dumdummaker", "monaToast")
+	elseif message_id==hash("instakill") then
+		self.hp=0
 		
 	elseif message_id==hash("rise") then
 		self.hp=2

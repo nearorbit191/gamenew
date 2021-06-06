@@ -6,7 +6,10 @@ function init(self)
 	self.ended=false
 	self.n=0
 	self.purgeCreated=false
-	
+	finalPos=vmath.vector3(0,0,1)
+	self.spawnYpos=0
+	self.spawnXpos=0
+	number=0
 	function does_object_exist(id)
 		return pcall(function(id) go.get_position(id) end, id) == true
 	end
@@ -22,24 +25,32 @@ function final(self)
 end
 
 function update(self, dt)
-	local number
 	--pprint(self.createdDumdums)
 	if not self.ended then
+		local spawnVect=vmath.vector3(0,0,0)
 		number=self.n
 		if number==0 then 
-			self.spawn=go.get_position("dumdumplaceholder")
-			id=factory.create("#factory", vmath.vector3(self.spawn.x, self.spawn.y, 1))
+			self.spawnXpos=go.get_position("dumdumplaceholder").x
+			self.spawnYpos=go.get_position("dumdumplaceholder").y
+			id=factory.create("#factory", vmath.vector3(self.spawnXpos, self.spawnYpos, 1))
 			table.insert(self.createdDumdums, id)
 			self.n=self.n+1
+			number=self.n
 		end
 		number=self.n
 		local shallSpawn=does_object_exist("dumdumplaceholder"..number)
+		
 		if shallSpawn==true then
-			self.spawn=go.get_position("dumdumplaceholder"..number)
-			id=factory.create("#factory", vmath.vector3(self.spawn.x, self.spawn.y, 1))
+			self.spawnXpos=go.get_position("dumdumplaceholder"..number).x
+			self.spawnYpos=go.get_position("dumdumplaceholder"..number).y
+			spawnVect=vmath.vector3(self.spawnXpos, self.spawnYpos,1)
+			id=factory.create("#factory", spawnVect)
 			print("spawned a dumdum, number... "..number)
 			table.insert(self.createdDumdums, id)
 			self.n=self.n+1
+			number=self.n
+			print(self.spawnXpos)
+			print(self.spawnYpos)
 		elseif shallSpawn==false then
 			print("couldn't spawn dumdum number "..number.." , done with living.")
 			self.ended=true
