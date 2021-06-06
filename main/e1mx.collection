@@ -1,0 +1,450 @@
+name: "e1"
+instances {
+  id: "mona"
+  prototype: "/main/mona.go"
+  position {
+    x: -318.0
+    y: 359.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: -383.0
+    y: 166.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "near_z"
+      value: "-2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "far_z"
+      value: "3.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "zoom"
+      value: "1.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "projection"
+      value: "FIXED_AUTO"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "offset_gui"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/mona"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "follow_lerp"
+      value: "0.2"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "follow_offset"
+      value: "200.0, 0.0, 0.0"
+      type: PROPERTY_TYPE_VECTOR3
+    }
+    properties {
+      id: "bounds_bottom"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "deadzone_bottom"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "deadzone_right"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "startpoint"
+  prototype: "/main/startpoint.go"
+  position {
+    x: 88.0
+    y: -2429.0
+    z: 5.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdummaker"
+  prototype: "/main/dumdummaker.go"
+  position {
+    x: 0.0
+    y: 502.0
+    z: -5.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 823.0
+    y: -2120.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "crudearrows"
+  prototype: "/main/crudearrows.go"
+  position {
+    x: -382.0
+    y: 547.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.5
+    y: 0.5
+    z: 1.0
+  }
+}
+instances {
+  id: "tpswitch"
+  prototype: "/main/tpswitch.go"
+  position {
+    x: 1954.0
+    y: 336.0
+    z: 0.9
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bg"
+  prototype: "/main/bg.go"
+  position {
+    x: 7144.0
+    y: -1937.0
+    z: 0.01
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.8
+    y: 1.8
+    z: 1.0
+  }
+}
+instances {
+  id: "e1m1"
+  prototype: "/main/e1m1.go"
+  position {
+    x: 288.0
+    y: -2547.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "e1m2"
+  prototype: "/main/e1m2.go"
+  position {
+    x: 4110.0
+    y: -2440.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "testlevel"
+  prototype: "/main/testlevel.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder1"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 2438.0
+    y: -2140.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder2"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 3919.0
+    y: -2155.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder3"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 5170.0
+    y: -2010.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder4"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 8510.0
+    y: -1329.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "instakillbarrier"
+  prototype: "/main/instakillbarrier.go"
+  position {
+    x: 7407.0
+    y: -7781.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 500.0
+    y: 500.0
+    z: 500.0
+  }
+}
+instances {
+  id: "attc"
+  prototype: "/main/attc.go"
+  position {
+    x: -86.0
+    y: 601.0
+    z: 0.99
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "swtich"
+  prototype: "/main/swtich.go"
+  position {
+    x: 2023.0
+    y: 512.0
+    z: 2.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "power"
+  prototype: "/main/power.go"
+  position {
+    x: 283.0
+    y: 595.0
+    z: 0.99
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+scale_along_z: 0

@@ -19,7 +19,8 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id==hash("activate") then
 		print("open sesame")
-		go.set_position(vmath.vector3(0,-200,1), "mona")
+		tppoint=go.get_position("startpoint")
+		go.set_position(vmath.vector3(tppoint.x,tppoint.y,1), "mona")
 	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/

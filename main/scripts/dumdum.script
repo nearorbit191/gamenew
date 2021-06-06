@@ -33,7 +33,7 @@ function init(self)
 		wall_jump_power_ratio_x=0.7,
 		wall_jump_power_ratio_y=1.5,
 		const_wall_jump=false,
-		debug = true,
+		--debug = true,
 	})
 	self.current_animation = nil
 	monapos=0
@@ -61,7 +61,7 @@ end
 function update(self, dt)
 	
 	self.xpos=go.get_world_position(self.id).x
-	print(self.xpos)
+	--print(self.xpos)
 	local isGrounded=self.platypus.has_ground_contact()
 
 	if self.forceLook==1 then

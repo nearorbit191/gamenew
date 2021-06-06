@@ -8,6 +8,7 @@ local ATTACK=hash("attack")
 local INTER=hash("interact")
 local TOGGLE_DEBUG = hash("toggle_debug")
 local TOGGLE_PROFILE = hash("toggle_profile")
+local QUITA= hash("quit")
 
 local ANIM_RUN = hash("run")
 local ANIM_JUMP = hash("jump")
@@ -46,7 +47,7 @@ function init(self)
 		wall_jump_power_ratio_x=0.5,
 		wall_jump_power_ratio_y=1.2,
 		const_wall_jump=false,
-		debug = true,
+		--debug = true,
 	}
 )
 	self.canInteract=false
@@ -213,6 +214,10 @@ local function handle_action(self, action_id, action)
 			self.switchInter=true
 			timer.delay(1, false, function() self.switchInter=false end)
 			msg.post("tpswitch#tpswitch", "activate")
+
+		elseif action_id==QUITA then
+			print("aaa")
+			sys.exit(0)
 		end
 	end
 end
@@ -280,6 +285,10 @@ end
 
 
 function on_input(self, action_id, action)
+	if action_id==hash("quit") and action.pressed then
+		print("aAAAA")
+		sys.exit(0)
+	end
 	handle_action(self, action_id, action)
 end
 

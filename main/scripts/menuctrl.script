@@ -1,0 +1,73 @@
+
+local ENTER = hash("jump")
+local QUIT= hash("quit")
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		-- New world is loaded. Init and enable it.
+		msg.post("camera", "disable")
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+		
+	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+local function handle_action(self, action_id, action)
+	if action_id==ENTER then
+
+	elseif action_id==QUIT and action.pressed then
+		print("a")
+		sys.exit(0)
+	end
+	
+end
+
+
+function on_input(self, action_id, action)
+	print("b")
+	if action_id==ENTER and action.pressed then
+		msg.post(".", "release_input_focus")
+		msg.post("e1loader", "startIt")
+	elseif action_id==hash("quit") and action.pressed then
+		print("a")
+		sys.exit(0)
+	end
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
