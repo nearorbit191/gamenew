@@ -5,7 +5,7 @@ instances {
   position {
     x: -23.0
     y: -1.0
-    z: 1.0
+    z: 0.9
   }
   rotation {
     x: 0.0
@@ -23,9 +23,9 @@ instances {
   id: "mona"
   prototype: "/main/mona.go"
   position {
-    x: -362.0
-    y: 357.0
-    z: 2.0
+    x: 5545.0
+    y: 736.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -67,7 +67,7 @@ instances {
     }
     properties {
       id: "zoom"
-      value: "1.2"
+      value: "1.1"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
@@ -105,6 +105,21 @@ instances {
       value: "0.0"
       type: PROPERTY_TYPE_NUMBER
     }
+    properties {
+      id: "bounds_top"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "deadzone_bottom"
+      value: "100.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "deadzone_right"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
   scale3 {
     x: 1.0
@@ -117,7 +132,7 @@ instances {
   prototype: "/main/dumdum.go"
   position {
     x: 807.0
-    y: 98.0
+    y: -145.0
     z: 1.0
   }
   rotation {
@@ -136,8 +151,8 @@ instances {
   id: "startpoint"
   prototype: "/main/startpoint.go"
   position {
-    x: -2.0
-    y: -206.0
+    x: 3237.0
+    y: 422.0
     z: 5.0
   }
   rotation {
@@ -177,7 +192,7 @@ instances {
   prototype: "/main/dumdumplaceholder.go"
   position {
     x: 315.0
-    y: 691.0
+    y: 293.0
     z: 0.0
   }
   rotation {
@@ -197,7 +212,7 @@ instances {
   prototype: "/main/dumdumplaceholder.go"
   position {
     x: 157.0
-    y: 129.0
+    y: 295.0
     z: 0.0
   }
   rotation {
@@ -238,7 +253,7 @@ instances {
   position {
     x: 1954.0
     y: 336.0
-    z: 1.5
+    z: 0.9
   }
   rotation {
     x: 0.0
@@ -249,6 +264,66 @@ instances {
   scale3 {
     x: 1.0
     y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "e1m1"
+  prototype: "/main/e1m1.go"
+  position {
+    x: 3459.0
+    y: 222.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "e1m2"
+  prototype: "/main/e1m2.go"
+  position {
+    x: 7482.0
+    y: 425.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bg"
+  prototype: "/main/bg.go"
+  position {
+    x: 10415.0
+    y: 1066.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.8
+    y: 1.8
     z: 1.0
   }
 }

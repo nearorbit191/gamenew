@@ -42,11 +42,11 @@ function update(self, dt)
 		self.platypus.right(900)
 		--print("disparar a la izquierda")
 	else
-		print("baile")
+		print("killme")
 	end
 	
 	if active and not wall_contact then
-		timer.delay(4, false, function() go.delete(); print("deleted by time"); msg.post("mona#mona", "bulletDed") end)
+		timer.delay(2, false, function() go.delete(); print("deleteded by time"); msg.post("mona#mona", "bulletDed") end)
 
 	end
 	-- Add update code here

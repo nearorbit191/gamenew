@@ -43,8 +43,8 @@ function init(self)
 		allow_wall_jump = true,
 		allow_wall_slide = true,
 		wall_slide_gravity = -50,
-		wall_jump_power_ratio_x=0.3,
-		wall_jump_power_ratio_y=1.5,
+		wall_jump_power_ratio_x=0.5,
+		wall_jump_power_ratio_y=1.2,
 		const_wall_jump=false,
 		debug = true,
 	}
@@ -52,7 +52,7 @@ function init(self)
 	self.canInteract=false
 	self.switchInter=false
 	self.isAlive=true
-	self.hp=2
+	self.hp=4
 	self.current_animation = nil
 	self.lookingAt=0
 	self.shootAnim=false
