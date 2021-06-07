@@ -352,7 +352,7 @@ instances {
   prototype: "/main/dumdumplaceholder.go"
   position {
     x: 8510.0
-    y: -1329.0
+    y: -1379.0
     z: 0.0
   }
   rotation {
@@ -434,6 +434,66 @@ instances {
     x: 283.0
     y: 595.0
     z: 0.99
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "finaltext"
+  prototype: "/main/finaltext.go"
+  position {
+    x: 11457.0
+    y: -1865.0
+    z: 0.5
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "qt"
+  prototype: "/main/qt.go"
+  position {
+    x: 2895.0
+    y: -2605.0
+    z: 0.6
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.5
+    y: 0.5
+    z: 1.0
+  }
+}
+instances {
+  id: "dumdumplaceholder5"
+  prototype: "/main/dumdumplaceholder.go"
+  position {
+    x: 9786.0
+    y: -1459.0
+    z: 0.0
   }
   rotation {
     x: 0.0
