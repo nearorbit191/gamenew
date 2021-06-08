@@ -102,17 +102,20 @@ function update(self, dt)
 	--disparar
 
 	if self.alerted and (self.canShoot and self.hasShot) and not self.turning then
+		print("fire")
 		play_animation(self, ANIM_ATT)
 		local id=factory.create("#nmebulletmaker")
 		self.canShoot=false
 		print(self.lookingAt)
 		print("xpos"..self.xpos)
+		--factory.create("#nmebulletmaker")
+		--la variable local también llama a la funcion xd.
 		if self.lookingAt==1 then
 			msg.post(msg.url(nil,id,"nmebullet"), "lookingLeft")
 		elseif self.lookingAt==2 then
 			msg.post(msg.url(nil,id,"nmebullet"), "lookingRight")
 		end
-		factory.create("#nmebulletmaker")
+		
 		timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
 	end
 	
@@ -166,7 +169,7 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id==hash("bulletHit") then
 		print("dumdum hit")
-		self.hp=self.hp-1/2
+		self.hp=self.hp-1
 		
 	elseif message_id==hash("scream") then
 		if not self.screamed then

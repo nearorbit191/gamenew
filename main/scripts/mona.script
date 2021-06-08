@@ -128,7 +128,7 @@ function update(self, dt)
 		elseif self.lookingAt==2 then
 			msg.post(msg.url(nil,id,"shot"), "lookingRight")
 		end
-		factory.create("#bullet")
+		--factory.create("#bullet")
 		--self.shootAnim=false
 		--timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
 	end
@@ -257,7 +257,7 @@ function on_message(self, message_id, message, sender)
 				self.canInteract=false
 			end
 	elseif message_id==hash("bulletHit") then
-		self.hp=self.hp-1/2
+		self.hp=self.hp-1
 		
 	elseif message_id==hash("toast") then
 		self.isAlive=false

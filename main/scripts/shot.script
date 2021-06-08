@@ -1,6 +1,6 @@
 local platypus= require "platypus.platypus"
 function init(self)
-	lookingAt=2
+	self.lookingAt=0
 	dmg=1
 	self.input_state = {}
 	self.platypus = platypus.create({
@@ -32,12 +32,13 @@ end
 
 function update(self, dt)
 	local wall_contact = self.platypus.has_wall_contact()
+	print(self.lookingAt)
 	--print(lookingAt)
-	if lookingAt==1 then
+	if self.lookingAt==1 then
 		sprite.set_hflip("#sprite", true)
 		self.platypus.left(900)
 		--print("disparar a la izquierda")
-	elseif lookingAt==2 then
+	elseif self.lookingAt==2 then
 		sprite.set_hflip("#sprite", false)
 		self.platypus.right(900)
 		--print("disparar a la izquierda")
@@ -62,11 +63,11 @@ function on_message(self, message_id, message, sender)
 	--La bala puede morir por chocar o, de no chocar, por tiempo.
 	if message_id==hash("lookingLeft") then
 		sprite.set_hflip("#sprite", true)
-		lookingAt=1
+		self.lookingAt=1
 		active=true
 	elseif message_id==hash("lookingRight") then
 		sprite.set_hflip("#sprite", false)
-		lookingAt=2
+		self.lookingAt=2
 		active=true
 	elseif message_id == platypus.WALL_CONTACT then
 		print("Wall contact")
