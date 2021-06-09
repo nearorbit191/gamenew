@@ -1,6 +1,9 @@
-# Intento de crear un juego
+# Intento de crear un juego.
+
 Motor usado: Defold.
+
 Género: Plataformas, sidescroller.
+
 Desarrolladores: Los Aprendices.
 
 
