@@ -1,0 +1,219 @@
+--Nombre: DumDum
+--Resumen: Enemigo que cambia de dirección cuando quiere. Ataque de patrón.
+local ANIM_RUN = hash("run")
+local ANIM_ATT = hash("attack")
+local platypus= require "platypus.platypus"
+function init(self)
+	self.xpos=vmath.vector3(0,0,0)
+	self.screamed=false
+	self.canShoot=true
+	self.hasShot=false
+	self.alerted=false
+	self.turning=false
+	self.rTurn=false
+	self.cheapTurn=false
+	self.hp=3
+	self.lookingAt=1
+	self.alive=true
+	self.platypus = platypus.create({
+		collisions = {
+			separation = platypus.SEPARATION_RAYS,
+			groups = {
+				[hash("ground")] = platypus.DIR_ALL,
+				--[hash("onewayplatform")] = platypus.DIR_ALL,
+				[hash("onewayplatform")] = platypus.DIR_DOWN,
+				[hash("onewaydoor")] = platypus.DIR_LEFT,
+			},
+			left = 6, right = 6, top = 50, bottom = 60, offset = vmath.vector3(0, 0, 0)
+		},
+		gravity = -20,
+		max_velocity = 1100,
+		allow_double_jump = true,
+		allow_wall_jump = true,
+		allow_wall_slide = true,
+		wall_slide_gravity = -50,
+		wall_jump_power_ratio_x=0.7,
+		wall_jump_power_ratio_y=1.5,
+		const_wall_jump=false,
+		--debug = true,
+	})
+	self.current_animation = nil
+	monapos=0
+	function otherp(monap)
+		monapos=monap
+	end
+end
+
+local function play_animation(self, animation)
+	if self.current_animation ~= animation then
+		msg.post("#sprite", "play_animation", { id = animation })
+		self.current_animation = animation
+	end
+end
+
+
+function final(self)
+	print("Luck is with you, Lo Wang")
+	--sound.play("#die")
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	
+	--John Carmack estaría orgulloso(?) tengo que buscar una forma de optimizarlo, si existe
+	--básicamente; Pide un número aleatorio, si es par, el bicho cambia de dirección luego de un rato. Lo que permite que vuelva a hacerlo está 
+	--en el mecanismo de darse vuelta por razones de llamadas y posibles problemas de que se repita.
+	if not self.cheapTurn then
+		self.cheapTurn=true
+		local randomTurn=math.random(1,6)
+		local turnCool=math.random(1,2)
+		print(randomTurn)
+		print(turnCool)
+		if randomTurn%2==0 then
+			timer.delay(turnCool, false, function() self.rTurn=true end)
+		end
+		timer.delay(turnCool, false, function() self.cheapTurn=false end)
+	end
+	self.xpos=go.get_world_position(self.id).x
+	--print(self.xpos)
+	local isGrounded=self.platypus.has_ground_contact()
+
+	if self.forceLook==1 then
+		self.lookingAt=1
+		sprite.set_hflip("#sprite", false) 
+	elseif self.forceLook==2 then
+		self.lookingAt=2
+		sprite.set_hflip("#sprite", true) 
+	end
+	--print(self.hp)
+	
+	if self.hp<=0 then
+		--screamed=true
+		msg.post(".", "scream")
+		timer.delay(0.4,false, function() go.delete() end)
+	end
+
+	
+
+	
+
+	--añadir el mecanismo para darse vuelta
+	--if not isGrounded and not self.turning then
+	if self.rTurn then
+		self.turning=true
+		if self.lookingAt==1 then
+			self.lookingAt=2
+			--self.platypus.right(60)
+			--dar vuelta el sprite de ser necesario.
+		elseif self.lookingAt==2 then
+			self.lookingAt=1
+			--self.platypus.left(60)
+			--dar vuelta el sprite de ser necesario.
+		end
+		timer.delay(0.6, false, function() self.turning=false end)
+		self.rTurn=false
+	end
+
+	--disparar
+
+	if self.alerted and (self.canShoot and self.hasShot) and not self.turning then
+		print("fire")
+		play_animation(self, ANIM_ATT)
+		local id=factory.create("#nmebulletmaker")
+		self.canShoot=false
+		print(self.lookingAt)
+		print("xpos"..self.xpos)
+		--factory.create("#nmebulletmaker")
+		--la variable local también llama a la funcion xd.
+		if self.lookingAt==1 then
+			msg.post(msg.url(nil,id,"nmebullet"), "lookingLeft")
+		elseif self.lookingAt==2 then
+			msg.post(msg.url(nil,id,"nmebullet"), "lookingRight")
+		end
+		
+		timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
+	end
+	
+	
+	if self.lookingAt==1 and not self.alerted then
+		self.platypus.left(50)
+		sprite.set_hflip("#sprite", false) 
+		play_animation(self, ANIM_RUN)
+		
+	elseif self.lookingAt==2 and not self.alerted then
+		self.platypus.right(50)
+		sprite.set_hflip("#sprite", true) 
+		play_animation(self,ANIM_RUN)
+	end
+
+	self.platypus.update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	
+	--parte de los mensajes
+	if message_id==hash("collision_response") and message.other_id==hash("/mona") then
+		otherp(message.other_position.x)
+	end
+	if message_id==hash("trigger_response") then
+		--collisión y detección.
+		print("monapos".. monapos)
+		--print(message.other_id)
+		if message.enter then
+			print ("dumdum: see u")
+			if message.other_id==hash("/mona") then
+				self.alerted=true
+				print("hi mona")
+				--ver a que lado mira
+				if monapos<self.xpos then
+					self.forceLook=1
+					print("2 the left")
+				elseif monapos>self.xpos then
+					self.forceLook=2
+					print("2 da right")
+				end
+				
+				self.hasShot=true
+
+			end
+			--attack()
+		else 
+			self.alerted=false
+			self.forceLook=0
+			print("dumdum:cant see u")
+		end
+	elseif message_id==hash("bulletHit") then
+		print("dumdum hit")
+		self.hp=self.hp-1
+		
+	elseif message_id==hash("scream") then
+		if not self.screamed then
+			sound.play("#die")
+			self.screamed=true
+		end
+		
+	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
