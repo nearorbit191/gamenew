@@ -1,0 +1,16 @@
+image: "/main/tilesources/tierra.png"
+tile_width: 32
+tile_height: 32
+tile_margin: 0
+tile_spacing: 0
+collision: "/main/tilesources/tierra.png"
+material_tag: "tile"
+convex_hulls {
+  index: 0
+  count: 4
+  collision_group: "ground"
+}
+collision_groups: "ground"
+extrude_borders: 0
+inner_padding: 0
+sprite_trim_mode: SPRITE_TRIM_MODE_OFF
