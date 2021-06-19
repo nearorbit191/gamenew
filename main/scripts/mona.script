@@ -58,6 +58,7 @@ function init(self)
 	self.current_animation = nil
 	self.lookingAt=0
 	self.shootAnim=false
+	self.fallDed=false
 	velI=480
 	vel=velI
 	dashV=2*velI
@@ -263,6 +264,9 @@ function on_message(self, message_id, message, sender)
 		
 	elseif message_id==hash("toast") then
 		self.isAlive=false
+		if not self.fallDed then
+			sound.play("#normalded")
+		end
 		play_animation(self, ANIM_IDLE)
 		msg.post("#sprite", "disable")
 		msg.post("camera","unfollow")
@@ -271,6 +275,8 @@ function on_message(self, message_id, message, sender)
 		msg.post("/dumdummaker#dumdummaker", "monaToast")
 	elseif message_id==hash("instakill") then
 		self.hp=0
+		self.fallDed=true
+		sound.play("#fallded")
 		
 	elseif message_id==hash("rise") then
 		self.hp=self.hpOriginal
@@ -280,7 +286,7 @@ function on_message(self, message_id, message, sender)
 		timer.delay(1.5, false, function() msg.post("#sprite", "enable"); self.isAlive=true end)
 		--self.isAlive=true
 		vibeChecked=false
-		
+		self.fallDed=false
 	end
 	
 end
