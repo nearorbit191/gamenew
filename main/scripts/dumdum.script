@@ -1,6 +1,6 @@
 --Nombre: DumDum
 --Resumen: Enemigo que está atrapado en su plataforma, se mueve de un lado a otro, y solo ataca cuando tiene a alguien en frente
-local ANIM_RUN = hash("run")
+local ANIM_RUN = hash("rrun")
 local ANIM_ATT = hash("attack")
 local platypus= require "platypus.platypus"
 function init(self)

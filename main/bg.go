@@ -1,8 +1,8 @@
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/main/anim/e1m1.atlas\"\n"
-  "default_animation: \"bg\"\n"
+  data: "tile_set: \"/main/anim/bgs.atlas\"\n"
+  "default_animation: \"background_city_skyline_visualisation02\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""

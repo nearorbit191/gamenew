@@ -233,6 +233,9 @@ function on_message(self, message_id, message, sender)
 		print("Ground contact")
 	elseif message_id == platypus.WALL_CONTACT then
 		print("Wall contact")
+	elseif message_id== platypus.DOUBLE_JUMP then
+		print("double jump? geese dude")
+		sound.play("#jump")
 	elseif message_id == platypus.FALLING then
 		print("Falling")
 	elseif message_id == platypus.WALL_JUMP then
