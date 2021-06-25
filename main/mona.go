@@ -157,6 +157,7 @@ embedded_components {
   "mask: \"onewayplatform\"\n"
   "mask: \"interactive\"\n"
   "mask: \"fall\"\n"
+  "mask: \"bghook\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

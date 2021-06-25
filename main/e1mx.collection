@@ -47,18 +47,13 @@ instances {
     }
     properties {
       id: "zoom"
-      value: "1.1"
+      value: "1.3"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "projection"
       value: "FIXED_AUTO"
       type: PROPERTY_TYPE_HASH
-    }
-    properties {
-      id: "offset_gui"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
     }
     properties {
       id: "follow"
@@ -211,8 +206,8 @@ instances {
   id: "bg"
   prototype: "/main/bg.go"
   position {
-    x: 723.0
-    y: -2214.0
+    x: 614.0
+    y: -2299.0
     z: 0.01
   }
   rotation {
@@ -222,9 +217,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 8.0
-    y: 8.0
-    z: 0.6
+    x: 0.8
+    y: 0.8
+    z: 0.8
   }
 }
 instances {

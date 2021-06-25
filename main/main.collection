@@ -20,7 +20,7 @@ instances {
   }
 }
 instances {
-  id: "camera"
+  id: "cameramenu"
   prototype: "/orthographic/camera.go"
   position {
     x: -3924.0

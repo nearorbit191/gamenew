@@ -76,7 +76,7 @@ function update(self, dt)
 	if self.hp<=0 then
 		--screamed=true
 		msg.post(".", "scream")
-		timer.delay(0.4,false, function() go.delete() end)
+		timer.delay(0.2,false, function() go.delete() end)
 	end
 
 

@@ -26,6 +26,10 @@ key_trigger {
   input: KEY_ESC
   action: "quit"
 }
+key_trigger {
+  input: KEY_SPACE
+  action: "unhook"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"

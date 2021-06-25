@@ -3,11 +3,11 @@ function init(self)
 	sound.play("#bgm")
 
 	--buscar los puntos de reset. 
-	startPoint=go.get_position("startpoint")
+	startPoint=go.get_world_position("startpoint")
 	print(startPoint)
 	respawnY, respawnX=0,0
 	function respawn()
-		msg.post("mona#mona", "rise", {respawnX,respawnY})
+		msg.post("mona", "rise", {respawnX,respawnY})
 	end
 end
 
@@ -25,6 +25,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id==hash("monaToast") then
+		print("monaded")
 		respawnX=startPoint.x
 		respawnY=startPoint.y
 		timer.delay(2, false, respawn)

@@ -1,4 +1,8 @@
 function init(self)
+	self.hooked=false
+	self.monaPos=vmath.vector3(0,0,0)
+	self.oriPos=go.get_position()
+	bgNewPos=vmath.vector3(0,0,0)
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
@@ -11,20 +15,31 @@ function final(self)
 end
 
 function update(self, dt)
+	local controlMonaPos=go.get_world_position("mona")
+	if self.hooked then
+		self.monaPos=go.get_world_position("mona")
+		--print("I'm hoooked on a feeling!".. self.monaPos)
+		if self.monaPos.x~=controlMonaPos then
+			bgNewPos=vmath.vector3((self.monaPos.x), (self.monaPos.y-100), (go.get_position().z))
+			go.set_position(bgNewPos)
+			print("I'm hoooked on a feeling!".. self.monaPos)
+		elseif self.monaPos.x==controlMonaPos then
+			bgNewPos=vmath.vector3((self.monaPos.x)+100, (go.get_position().y), (go.get_position().z))
+			go.set_position(bgNewPos)
+		end		
+	elseif not self.hooked then
+		go.set_position(self.oriPos)
+	end
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("proxy_loaded") then
-		-- New world is loaded. Init and enable it.
-		msg.post("cameramenu", "disable")
-		msg.post(sender, "init")
-		msg.post(sender, "enable")
-	elseif message_id==hash("startIt") then
-		msg.post(".", "acquire_input_focus")
-		msg.post("#collectionproxy", "load")
+	if message_id==hash("trigger_response") then
+		self.hooked=true
+	elseif message_id==hash("unhook") then
+		self.hooked=false
 	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/
