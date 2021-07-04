@@ -1,0 +1,93 @@
+function init(self)
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+	local currentMonaX=0
+	self.firstRead=false
+	self.actionCourse=0
+	local firstMonaX
+	layer1pos=go.get_world_position("bglayer1")
+	layer2pos=go.get_world_position("bglayer2")
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	if not self.firstRead then
+		firstMonaX=go.get_world_position("mona").x
+		self.firstRead=true
+	end
+	--Darle un polling rate de la posición de la mona. Por ahora cada 30 frames (se supone).
+	timer.delay(0.5, false, function()  currentMonaX=go.get_world_position("mona").x; 
+										self.actionCourse=firstMonaX-currentMonaX; 
+										self.firstRead=false end )
+	--self.actionCourse=firstMonaX-currentMonaX
+	print("test"..self.actionCourse)
+
+	if self.actionCourse==0 then
+		--nothing at all¿
+		print("for nothing at all")
+	elseif self.actionCourse<0 then
+		msg.post(".", "goingRight")
+
+	elseif self.actionCourse>0 then
+		msg.post(".", "goingLeft")
+		print("parallax right")
+	end
+
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("goingRight") then
+		layer1pos=go.get_world_position("bglayer1")
+		go.set_position(vmath.vector3(layer1pos.x+2, layer1pos.y, layer1pos.z), "bglayer1")
+		layer1pos=go.get_world_position("bglayer1")
+		print("parallax left")
+		print(layer1pos)
+
+		layer2pos=go.get_world_position("bglayer2")
+		go.set_position(vmath.vector3(layer2pos.x+1.5, layer2pos.y, layer2pos.z), "bglayer2")
+		layer2pos=go.get_world_position("bglayer2")
+		print("parallax left")
+		print(layer2pos)
+
+	elseif message_id==hash("goingLeft") then
+		layer1pos=go.get_world_position("bglayer1")
+		go.set_position(vmath.vector3(layer1pos.x-2, layer1pos.y, layer1pos.z), "bglayer1")
+		layer1pos=go.get_world_position("bglayer1")
+		print("parallax left")
+		print(layer1pos)
+
+		layer2pos=go.get_world_position("bglayer2")
+		go.set_position(vmath.vector3(layer2pos.x-1.5, layer2pos.y, layer2pos.z), "bglayer2")
+		layer2pos=go.get_world_position("bglayer2")
+		print("parallax left")
+		print(layer2pos)
+
+	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

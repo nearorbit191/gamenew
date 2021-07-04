@@ -57,7 +57,7 @@ embedded_components {
 embedded_components {
   id: "bgm"
   type: "sound"
-  data: "sound: \"/main/sounds/D_BETWEE.ogg\"\n"
+  data: "sound: \"/main/sounds/Nivel1.ogg\"\n"
   "looping: 1\n"
   "group: \"master\"\n"
   "gain: 0.05\n"

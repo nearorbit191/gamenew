@@ -159,10 +159,50 @@ instances {
 }
 instances {
   id: "bg"
-  prototype: "/main/bg.go"
+  prototype: "/main/bgparallax.go"
   position {
-    x: 657.0
-    y: 453.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bglayer1"
+  prototype: "/main/bglayer1.go"
+  position {
+    x: 149.0
+    y: 523.0
+    z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bglayer2"
+  prototype: "/main/bglayer2.go"
+  position {
+    x: 52.0
+    y: 546.0
     z: 0.0
   }
   rotation {

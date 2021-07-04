@@ -204,7 +204,7 @@ instances {
 }
 instances {
   id: "bg"
-  prototype: "/main/bg.go"
+  prototype: "/main/bglegacy.go"
   position {
     x: 614.0
     y: -2299.0
