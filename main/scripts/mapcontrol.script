@@ -1,5 +1,6 @@
+math.randomseed(os.time()) --determinismo rules
 function init(self)
-	math.randomseed(13) --determinismo rules
+	--math.randomseed(13) --determinismo rules
 	sound.play("#bgm")
 
 	--buscar los puntos de reset. 

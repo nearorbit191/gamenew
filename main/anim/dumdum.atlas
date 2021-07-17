@@ -59,12 +59,24 @@ animations {
 animations {
   id: "attack"
   images {
-    image: "/main/anim/img/Attack__000.png"
+    image: "/main/anim/img/Armature_attck2_0.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
-  playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
-  flip_horizontal: 1
+  images {
+    image: "/main/anim/img/Armature_attck2_1.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/main/anim/img/Armature_attck2_2.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/main/anim/img/Armature_attck2_3.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_ONCE_FORWARD
+  fps: 12
+  flip_horizontal: 0
   flip_vertical: 0
 }
 animations {
@@ -186,7 +198,14 @@ animations {
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 32
+  fps: 24
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "movwalk"
+  playback: PLAYBACK_ONCE_FORWARD
+  fps: 60
   flip_horizontal: 0
   flip_vertical: 0
 }

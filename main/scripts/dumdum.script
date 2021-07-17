@@ -22,7 +22,7 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 6, right = 6, top = 50, bottom = 60, offset = vmath.vector3(0, 0, 0)
+			left = 6, right = 6, top = 50, bottom = 40, offset = vmath.vector3(0, 0, 0)
 		},
 		gravity = -20,
 		max_velocity = 1100,
@@ -104,6 +104,7 @@ function update(self, dt)
 	if self.alerted and (self.canShoot and self.hasShot) and not self.turning then
 		print("fire")
 		play_animation(self, ANIM_ATT)
+		sound.play("#Metralleta")
 		local id=factory.create("#nmebulletmaker")
 		self.canShoot=false
 		print(self.lookingAt)
@@ -117,6 +118,8 @@ function update(self, dt)
 		end
 		
 		timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
+	elseif self.alerted and not self.hasShot and not self.turning then
+		timer.delay(2,false,function() self.hasShot=true end)
 	end
 	
 	

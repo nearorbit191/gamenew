@@ -1,0 +1,172 @@
+--o el desgraciado que campea desde el final.
+
+
+local platypus= require "platypus.platypus"
+function init(self)
+	self.xpos=vmath.vector3(0,0,0)
+	self.isAwaken=false
+	self.attackAuth=1
+	self.screamed=false
+	self.canShoot=true
+	self.hasShot=false
+	self.alerted=false
+	self.turning=false
+	self.beginAttack=false
+	self.hp=2
+	self.lookingAt=1
+	self.alive=true
+	self.platypus = platypus.create({
+		collisions = {
+			separation = platypus.SEPARATION_RAYS,
+			groups = {
+				[hash("ground")] = platypus.DIR_ALL,
+				[hash("onewayplatform")] = platypus.DIR_ALL,
+				[hash("onewayplatform")] = platypus.DIR_DOWN,
+				[hash("onewaydoor")] = platypus.DIR_LEFT,
+			},
+			left = 6, right = 6, top = 50, bottom = 50, offset = vmath.vector3(0, 0, 0)
+		},
+		gravity = -100,
+		max_velocity = 1100,
+		allow_double_jump = true,
+		allow_wall_jump = true,
+		allow_wall_slide = true,
+		wall_slide_gravity = -50,
+		wall_jump_power_ratio_x=0.7,
+		wall_jump_power_ratio_y=1.5,
+		const_wall_jump=false,
+		--debug = true,
+	})
+	self.current_animation = nil
+	monapos=0
+	function otherp(monap)
+		monapos=monap
+	end
+end
+
+local function play_animation(self, animation)
+	if self.current_animation ~= animation then
+		msg.post("#sprite", "play_animation", { id = animation })
+		self.current_animation = animation
+	end
+end
+
+
+function final(self)
+	print("Luck is with you, Lo Wang")
+	--sound.play("#die")
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+
+	self.xpos=go.get_world_position(self.id).x
+	--print(self.xpos)
+	local isGrounded=self.platypus.has_ground_contact()
+
+
+	--print(self.hp)
+
+	if self.hp<=0 then
+		--screamed=true
+		msg.post(".", "scream")
+		timer.delay(0.02,false, function() go.delete() end)
+	end
+	
+	if not self.beginAttack and self.isAwaken then
+		timer.delay(6,false, function() self.attackAuth=math.random(1,13); print("rnd"..self.attackAuth) end)
+	end
+	
+	
+	if (self.attackAuth%2)==0 then
+		--self.monaX=go.get_world_position("/mona").x
+		--self.monaY=go.get_world_position("/mona").y
+		self.beginAttack=true
+		self.attackAuth=1
+		--poner al dron en posición
+	end
+	
+	if self.beginAttack and self.lookingAt==1 then
+		msg.post("/drone", "begin")
+		self.lookingAt=2
+		--recuperar esto con mensaje del dron.
+		--newDronepos=vmath.vector3(self.monaX,self.monaY,1)
+		--go.set_position(newDronepos, "drone")
+		--timer.delay(4, false, function() self.beginAttack=false; go.set_position(original, "drone") end)
+	end
+
+
+
+
+	--disparar
+
+	if self.alerted and (self.canShoot and self.hasShot) and not self.turning then
+		print("fire")
+		play_animation(self, ANIM_ATT)
+		sound.play("#Metralleta")
+		local id=factory.create("#nmebulletmaker")
+		self.canShoot=false
+		print(self.lookingAt)
+		print("xpos"..self.xpos)
+		--factory.create("#nmebulletmaker")
+		--la variable local también llama a la funcion xd.
+		if self.lookingAt==1 then
+			msg.post(msg.url(nil,id,"nmebullet"), "lookingLeft")
+		elseif self.lookingAt==2 then
+			msg.post(msg.url(nil,id,"nmebullet"), "lookingRight")
+		end
+
+		timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
+	elseif self.alerted and not self.hasShot and not self.turning then
+		timer.delay(2,false,function() self.hasShot=true end)
+	end
+
+
+
+	self.platypus.update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+
+	--parte de los mensajes
+	if message_id==hash("done") then
+		print("dona")
+		self.lookingAt=1
+		self.beginAttack=false
+	elseif message_id==hash("wakeUp") then
+		self.isAwaken=true
+		
+	elseif message_id==hash("bulletHit") then
+		print("dumdum hit")
+		self.hp=self.hp-1
+
+	elseif message_id==hash("scream") then
+		if not self.screamed then
+			sound.play("#die")
+			self.screamed=true
+		end
+	end	
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

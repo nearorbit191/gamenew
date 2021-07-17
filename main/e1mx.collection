@@ -3,8 +3,8 @@ instances {
   id: "mona"
   prototype: "/main/mona.go"
   position {
-    x: -318.0
-    y: 359.0
+    x: 7244.0
+    y: -1984.0
     z: 1.0
   }
   rotation {
@@ -106,8 +106,8 @@ instances {
   id: "startpoint"
   prototype: "/main/startpoint.go"
   position {
-    x: 88.0
-    y: -2429.0
+    x: 7231.0
+    y: -1870.0
     z: 5.0
   }
   rotation {
@@ -447,7 +447,7 @@ instances {
   prototype: "/main/finaltext.go"
   position {
     x: 11457.0
-    y: -1865.0
+    y: -2607.0
     z: 0.5
   }
   rotation {
@@ -507,8 +507,88 @@ instances {
   prototype: "/main/movable.go"
   position {
     x: 0.0
-    y: 309.0
+    y: -40.0
     z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "yuki"
+  prototype: "/main/yuki.go"
+  position {
+    x: 167.0
+    y: 363.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "movableplaceholder"
+  prototype: "/main/movableplaceholder.go"
+  position {
+    x: 8101.0
+    y: -1997.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "movablemkr"
+  prototype: "/main/movablemkr.go"
+  position {
+    x: 0.0
+    y: -622.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "movableplaceholder1"
+  prototype: "/main/movableplaceholder.go"
+  position {
+    x: 8094.0
+    y: -1872.0
+    z: 0.0
   }
   rotation {
     x: 0.0

@@ -1,0 +1,103 @@
+function init(self)
+	--self.spawn=go.get_position("dumdumplaceholder")
+	self.createdDumdums={}
+	--id=factory.create("#factory", vmath.vector3(self.spawn.x, self.spawn.y, 1))
+	--table.insert(self.createdDumdums, id)
+	self.ended=false
+	self.n=0
+	self.purgeCreated=false
+	finalPos=vmath.vector3(0,0,1)
+	self.spawnYpos=0
+	self.spawnXpos=0
+	number=0
+	function does_object_exist(id)
+		return pcall(function(id) go.get_position(id) end, id) == true
+	end
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	--pprint(self.createdDumdums)
+	if not self.ended then
+		local spawnVect=vmath.vector3(0,0,0)
+		number=self.n
+		if number==0 then 
+			self.spawnXpos=go.get_position("movableplaceholder").x
+			self.spawnYpos=go.get_position("movableplaceholder").y
+			id=factory.create("#factory", vmath.vector3(self.spawnXpos, self.spawnYpos, 1))
+			table.insert(self.createdDumdums, id)
+			self.n=self.n+1
+			number=self.n
+		end
+		number=self.n
+		local shallSpawn=does_object_exist("movableplaceholder"..number)
+		
+		if shallSpawn==true then
+			self.spawnXpos=go.get_position("movableplaceholder"..number).x
+			self.spawnYpos=go.get_position("movableplaceholder"..number).y
+			spawnVect=vmath.vector3(self.spawnXpos, self.spawnYpos,1)
+			id=factory.create("#factory", spawnVect)
+			print("spawned a movable, number... "..number)
+			table.insert(self.createdDumdums, id)
+			self.n=self.n+1
+			number=self.n
+			print(self.spawnXpos)
+			print(self.spawnYpos)
+		elseif shallSpawn==false then
+			print("couldn't spawn movable number "..number.." , done with living.")
+			self.ended=true
+		end
+	end	
+
+
+	if self.purgeCreated==true then
+		self.purgeCreated=false
+		timer.delay(3, false, 
+		function()
+			go.delete_all(self.createdDumdums)
+			self.purgeCreated=false
+			print("end purge")
+			self.n=0
+			number=self.n
+			self.ended=false
+		end)
+	end
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("monaToast") then
+		self.purgeCreated=true
+	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

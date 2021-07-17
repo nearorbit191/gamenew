@@ -1,0 +1,91 @@
+function init(self)
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+	self.start=false
+	self.original= go.get_world_position()
+	self.canMove=true
+	self.called=false
+
+	--function attacksq()
+	--	lol1=timer.delay(4, false, function() self.canMove=false end)
+		--timer.delay(6, false, function() ataca end)
+		--lol3=timer.delay(7, false, function() self.start=false; go.set_position(self.original); msg.post("/foofighter", "done"); self.canMove=true end)
+	--end
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	if self.start then
+		self.monaX=go.get_world_position("/mona").x
+		self.monaY=go.get_world_position("/mona").y
+		if self.canMove then
+			newDronepos=vmath.vector3(self.monaX,self.monaY+260,0.5)
+			go.set_position(newDronepos, "drone")
+		end
+		if not self.called then
+			--attacksq()
+			msg.post(".", "doit")
+			self.called=true
+		end
+		if self.doAttack then
+			if self.hurtIt then
+				msg.post("/mona", "bulletHit")
+			elseif not self.hurtIt then
+				--nothing lol
+	
+			end
+			self.doAttack=false
+		end
+		--timer.delay(4, false, function() self.canMove=false end)
+		--timer.delay(5, false, function() ataca end)
+	--	timer.delay(5, false, function() self.start=false; go.set_position(self.original, "drone") end)
+	--	self.start=false
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("begin") then
+		self.start=true
+	elseif message_id==hash("doit") then
+		lol1=timer.delay(4, false, function() self.canMove=false end)
+		timer.delay(6, false, function() self.doAttack=true end)
+		lol3=timer.delay(7, false, function() self.start=false; go.set_position(self.original); msg.post("/foofighter", "done"); 
+		self.canMove=true; self.called=false; self.doAttack=false end)
+	elseif message_id==hash("trigger_response") then
+		--collisión y detección.
+		print("monapos".. monapos)
+		--print(message.other_id)
+		if message.enter and message.other_id==hash("/mona") then
+			self.hurtIt=true
+			print("hurt you")
+		elseif not message.enter then
+			self.hurtIt=false
+			print("escaped")
+
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

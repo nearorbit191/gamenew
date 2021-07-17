@@ -57,7 +57,7 @@ function init(self)
 	self.hpOriginal=4
 	self.hp=self.hpOriginal
 	self.current_animation = nil
-	self.lookingAt=0
+	self.lookingAt=2
 	self.shootAnim=false
 	self.fallDed=false
 	velI=480
@@ -91,11 +91,13 @@ end
 
 
 function update(self, dt)
-	print(self.hp)
-	--print(self.canShoot)
+
 	
 	local ground_contact = self.platypus.has_ground_contact()
 	local walljumpd=self.platypus.is_wall_jumping()
+
+	--update gui
+	msg.post("#hud", self.hp)
 
 	--vibe check
 	if self.hp<=0 and not vibeChecked then
@@ -287,6 +289,7 @@ function on_message(self, message_id, message, sender)
 		go.set_position(vmath.vector3(0,-5,1))
 		msg.post("/testlevel#mapcontrol", "monaToast")
 		msg.post("/dumdummaker#dumdummaker", "monaToast")
+		msg.post("/movablemkr#movablemaker", "monaToast")
 	elseif message_id==hash("instakill") then
 		if self.isAlive then 
 			self.hp=0

@@ -24,9 +24,9 @@ function init(self)
 				[hash("onewayplatform")] = platypus.DIR_DOWN,
 				[hash("onewaydoor")] = platypus.DIR_LEFT,
 			},
-			left = 6, right = 6, top = 50, bottom = 60, offset = vmath.vector3(0, 0, 0)
+			left = 6, right = 6, top = 50, bottom = 50, offset = vmath.vector3(0, 0, 0)
 		},
-		gravity = -20,
+		gravity = -60,
 		max_velocity = 1100,
 		allow_double_jump = true,
 		allow_wall_jump = true,
@@ -35,7 +35,7 @@ function init(self)
 		wall_jump_power_ratio_x=0.7,
 		wall_jump_power_ratio_y=1.5,
 		const_wall_jump=false,
-		--debug = true,
+		debug = true,
 	})
 	self.current_animation = nil
 	monapos=0
@@ -53,7 +53,6 @@ end
 
 
 function final(self)
-	print("Luck is with you, Lo Wang")
 	--sound.play("#die")
 	-- Add finalization code here
 	-- Learn more: https://defold.com/manuals/script/
@@ -61,6 +60,8 @@ function final(self)
 end
 
 function update(self, dt)
+	print(go.get_position())
+	print(self.hp)
 	
 	--John Carmack estaría orgulloso(?) tengo que buscar una forma de optimizarlo, si existe
 	--básicamente; Pide un número aleatorio, si es par, el bicho cambia de dirección luego de un rato. Lo que permite que vuelva a hacerlo está 
@@ -69,8 +70,8 @@ function update(self, dt)
 		self.cheapTurn=true
 		local randomTurn=math.random(1,6)
 		local turnCool=math.random(1,2)
-		print(randomTurn)
-		print(turnCool)
+		--print(randomTurn)
+	--	print(turnCool)
 		if randomTurn%2==0 then
 			timer.delay(turnCool, false, function() self.rTurn=true end)
 		end
@@ -134,6 +135,8 @@ function update(self, dt)
 		end
 		
 		timer.delay(3, false, function() self.canShoot=true self.hasShot=false end)
+	elseif self.alerted and not self.hasShot and not self.turning then
+		timer.delay(2,false,function() self.hasShot=true end)
 	end
 	
 	

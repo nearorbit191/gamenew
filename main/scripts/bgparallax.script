@@ -26,17 +26,17 @@ function update(self, dt)
 										self.actionCourse=firstMonaX-currentMonaX; 
 										self.firstRead=false end )
 	--self.actionCourse=firstMonaX-currentMonaX
-	print("test"..self.actionCourse)
+	--print("test"..self.actionCourse)
 
 	if self.actionCourse==0 then
 		--nothing at all¿
-		print("for nothing at all")
+		--print("for nothing at all")
 	elseif self.actionCourse<0 then
 		msg.post(".", "goingRight")
 
 	elseif self.actionCourse>0 then
 		msg.post(".", "goingLeft")
-		print("parallax right")
+		--print("parallax right")
 	end
 
 end
@@ -46,27 +46,27 @@ function on_message(self, message_id, message, sender)
 		layer1pos=go.get_world_position("bglayer1")
 		go.set_position(vmath.vector3(layer1pos.x+2, layer1pos.y, layer1pos.z), "bglayer1")
 		layer1pos=go.get_world_position("bglayer1")
-		print("parallax left")
-		print(layer1pos)
+		--print("parallax left")
+		--print(layer1pos)
 
 		layer2pos=go.get_world_position("bglayer2")
 		go.set_position(vmath.vector3(layer2pos.x+1.5, layer2pos.y, layer2pos.z), "bglayer2")
 		layer2pos=go.get_world_position("bglayer2")
-		print("parallax left")
-		print(layer2pos)
+		--print("parallax left")
+		--print(layer2pos)
 
 	elseif message_id==hash("goingLeft") then
 		layer1pos=go.get_world_position("bglayer1")
 		go.set_position(vmath.vector3(layer1pos.x-2, layer1pos.y, layer1pos.z), "bglayer1")
 		layer1pos=go.get_world_position("bglayer1")
-		print("parallax left")
-		print(layer1pos)
+		--print("parallax left")
+		--print(layer1pos)
 
 		layer2pos=go.get_world_position("bglayer2")
 		go.set_position(vmath.vector3(layer2pos.x-1.5, layer2pos.y, layer2pos.z), "bglayer2")
 		layer2pos=go.get_world_position("bglayer2")
-		print("parallax left")
-		print(layer2pos)
+		--print("parallax left")
+	--	print(layer2pos)
 
 	end
 	-- Add message-handling code here

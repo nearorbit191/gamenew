@@ -3,8 +3,8 @@ instances {
   id: "mona"
   prototype: "/main/mona.go"
   position {
-    x: 214.0
-    y: 535.0
+    x: 140.0
+    y: 518.0
     z: 0.9
   }
   rotation {
@@ -203,6 +203,106 @@ instances {
   position {
     x: 52.0
     y: 546.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bglegacy"
+  prototype: "/main/bglegacy.go"
+  position {
+    x: -1222.0
+    y: 636.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "foofighter"
+  prototype: "/main/foofighter.go"
+  position {
+    x: 1898.0
+    y: 653.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.3
+    y: 0.3
+    z: 0.3
+  }
+}
+instances {
+  id: "drone"
+  prototype: "/main/drone.go"
+  position {
+    x: -1563.0
+    y: 672.0
+    z: 0.5
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "movable"
+  prototype: "/main/movable.go"
+  position {
+    x: 815.0
+    y: 58.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "yuki"
+  prototype: "/main/yuki.go"
+  position {
+    x: 627.0
+    y: 531.0
     z: 0.0
   }
   rotation {

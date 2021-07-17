@@ -13,6 +13,21 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "hud"
+  component: "/main/hud.gui"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -107,6 +122,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"target\"\n"
   "mask: \"see\"\n"
+  "mask: \"schlong\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
